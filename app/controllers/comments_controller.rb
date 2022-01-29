@@ -22,11 +22,10 @@ class CommentsController < ApplicationController
   # POST /comments or /comments.json
   def create
     @comment = Comment.new(comment_params)
-    respond_to do |format|
-      if @comment.save
-        format.html { redirect_to @comment.post, notice: "Comment was successfully created." }
-      else
-        format.html { render :new, status: :unprocessable_entity }
+    
+    if @comment.save
+      respond_to do |format|
+        format.js{ render :js => "document.getElementById('comment_text').value = '';" }
       end
     end
   end
